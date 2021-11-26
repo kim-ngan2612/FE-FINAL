@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Admin from "./features/admin";
+import Customer from "./features/customer";
+import logined from "./features/logined";
+import SignIn from "./features/SignIn";
+import "./style.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
+import PageNotFound from "./features/pagenotfound";
+import PrivateRoute from "./features/PrivateRoute";
+import 'antd/dist/antd.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signin" element={<SignIn />} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Customer />} />
+            <Route path="/admin" element={<Admin />} />
+          </Route>
+          {/* <Route exact path="/" element={<Admin />} /> */}
+
+          {/* <Route index element={<Home />} />
+            <Route path="teams" element={<Teams />}>
+              <Route path=":teamId" element={<Team />} />
+              <Route path="new" element={<NewTeamForm />} />
+              <Route index element={<LeagueStandings />} />
+            </Route> */}
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
